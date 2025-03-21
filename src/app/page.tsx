@@ -1,7 +1,5 @@
-import Image from "next/image";
 import { fetchTodos } from "@/api/fetchTodos";
 import TodoList from "@/components/TodoList";
-import { useTodos } from "@/context/TodoContext";
 
 const Home = async () => {
   const initiaTodos = await fetchTodos();
