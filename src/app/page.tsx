@@ -1,7 +1,8 @@
 import { fetchTodos } from "@/api/fetchTodos";
 import TodoList from "@/components/TodoList";
+import { JSX } from "react";
 
-const Home = async () => {
+const Home = async (): Promise<JSX.Element> => {
   const initiaTodos = await fetchTodos();
 
   return (

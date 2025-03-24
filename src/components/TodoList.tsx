@@ -1,31 +1,31 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, JSX } from "react";
 import { useTodos } from "@/context/TodoContext";
 import { Todo } from "@/utils/interfaces";
 import GreenTick from "@/assets/icons/green-tick";
 import RedCross from "@/assets/icons/red-cross";
 
-const TodoList = ({ initiaTodos }: { initiaTodos: Todo[] }) => {
+interface TodoListProps {
+  initiaTodos: Todo[];
+}
+
+const TodoList = ({ initiaTodos }: TodoListProps): JSX.Element => {
   const todosContext = useTodos();
   const pageSize: number = 7;
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const totalPages: number = todosContext?.todosList
-    ? Math.ceil(todosContext.todosList.length / pageSize)
-    : 0;
+  const totalPages: number = Math.ceil(
+    todosContext.todosList.length / pageSize
+  );
 
-  const paginatedTodos: Todo[] = todosContext?.todosList
-    ? todosContext.todosList.slice(
-        (currentPage - 1) * pageSize,
-        currentPage * pageSize
-      )
-    : [];
+  const paginatedTodos: Todo[] = todosContext.todosList.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
 
   useEffect(() => {
-    if (todosContext) {
-      todosContext.setTodosList(initiaTodos);
-    }
+    todosContext.setTodosList(initiaTodos);
   }, [initiaTodos, todosContext]);
 
   return (
@@ -38,11 +38,21 @@ const TodoList = ({ initiaTodos }: { initiaTodos: Todo[] }) => {
               key={todo.id}
               className="p-2 flex items-center justify-between rounded-lg shadow-md bg-white"
             >
-              <div className="flex items-center space-x-2 mr-4">
+              <div className="flex items-center space-x-2 mr-[2rem]">
                 <span className="font-medium text-black">{serialNumber}.</span>
                 <span className="font-medium text-black">{todo.title}</span>
               </div>
-              {todo.completed ? <GreenTick /> : <RedCross />}
+              {todo.completed ? (
+                <div className="bg-green-200 p-2 rounded">
+                  <span className="text-green-800 font-medium">Completed</span>
+                </div>
+              ) : (
+                <div className="bg-red-200 p-2 rounded">
+                  <span className="text-red-800 font-medium">
+                    Not Completed
+                  </span>
+                </div>
+              )}
             </li>
           );
         })}
