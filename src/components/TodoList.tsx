@@ -3,8 +3,6 @@
 import { useState, useEffect, JSX } from "react";
 import { useTodos } from "@/context/TodoContext";
 import { Todo } from "@/utils/interfaces";
-import GreenTick from "@/assets/icons/green-tick";
-import RedCross from "@/assets/icons/red-cross";
 
 interface TodoListProps {
   initiaTodos: Todo[];
